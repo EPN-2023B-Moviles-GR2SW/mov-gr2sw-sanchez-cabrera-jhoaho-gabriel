@@ -18,8 +18,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:label="@string/title_activity_main"
-            android:theme="@style/Theme.B2023gr2sw" />
+            android:label="@string/title_activity_main"/>
     </application>
 
 </manifest>
