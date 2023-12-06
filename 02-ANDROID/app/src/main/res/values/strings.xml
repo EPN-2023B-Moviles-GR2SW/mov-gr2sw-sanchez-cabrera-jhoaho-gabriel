@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">B2023gr2sw</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="saludo">Buenos Dias</string>
+    <string name="txt">Buenos Dias</string>
+    <color name="txt_color"></color>
+    <color name="bg_color"></color>
+
 </resources>

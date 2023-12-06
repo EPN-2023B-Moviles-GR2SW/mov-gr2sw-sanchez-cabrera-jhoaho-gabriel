@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="txt">Good Morning</string>
+    <color name="txt_color">#FF2103</color>
+    <color name="bg_color">#002DF1</color>
+</resources>
