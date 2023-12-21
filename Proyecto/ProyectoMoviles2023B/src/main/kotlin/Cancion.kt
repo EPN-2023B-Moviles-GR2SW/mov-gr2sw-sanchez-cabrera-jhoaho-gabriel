@@ -7,7 +7,7 @@ class Cancion {
     var favorita: Boolean = false
     var autor: String = ""
 
-    constructor(){
+    constructor() {
         this.id = numCanciones++
     }
 
@@ -98,10 +98,14 @@ class Cancion {
         }
 
         fun deleteById(id: Int) {
-            //TODO: borrar tambien el la lista de reproduccion
-
+            val cancion = getById(id)
             val removido = getAll().removeIf { cancion -> (cancion.id == id) }
             if (removido) {
+                ListaReproduccion.listas.forEach {
+                    if (it.getListaCanciones().contains(cancion)) {
+                        it.quitarCancionPorId(id)
+                    }
+                }
                 uptLines()
                 println("\nCancion eliminado correctamente.")
             } else {
@@ -120,9 +124,9 @@ class Cancion {
             return Cancion()
         }
 
-        fun mostrarCanciones(){
+        fun mostrarCanciones() {
             val sg = getAll()
-            sg.forEach{ println(it) }
+            sg.forEach { println(it) }
         }
 
     }

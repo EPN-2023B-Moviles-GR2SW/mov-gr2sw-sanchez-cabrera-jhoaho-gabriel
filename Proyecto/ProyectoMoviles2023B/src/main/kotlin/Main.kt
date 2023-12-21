@@ -1,14 +1,9 @@
 fun main(args: Array<String>) {
-    //Objetivo: Lista de reproduccion - canciones
-
-
-    //agregar escritura y lecutra de archivos (json/csv/xml)
-
-
 
     //Menu
 
     Cancion.getAll()
+    ListaReproduccion.getAll()
     var opt = 0
 
     do {
@@ -30,10 +25,11 @@ fun main(args: Array<String>) {
 
         when(opt){
             1 -> {
-                //crear lista
+                println("Ingrese el nombre de la lista:")
+                val n = readln()
+                ListaReproduccion.crearLista(n, false, 0.0)
             }
             2 -> {
-                //crear cancion
                 println("\nIngrese el nombre de la cancion: ")
                 val n = readln()
                 println("Ingrese la duracion de la cancion: ")
@@ -43,10 +39,14 @@ fun main(args: Array<String>) {
                 Cancion.crearCancion(n, d, false, a)
             }
             3 -> {
-                // mostrar todas las listas
+                println("***\tListas encontradas\t***")
+                ListaReproduccion.mostrarListas()
             }
             4 -> {
-                // mostrar una lista por id
+                println("\nIngrese el ID de la lista de reproduccion a mostrar: ")
+                val id = readln().toInt()
+                println(ListaReproduccion.getById(id))
+                println()
             }
             5 -> {
                 println("***\tCanciones encontradas\t***")
@@ -59,7 +59,18 @@ fun main(args: Array<String>) {
                 println()
             }
             7 -> {
-                //ACtualizar lista
+                println("\nIngrese el ID de la lista de reproduccion:")
+                val id = readln().toInt()
+                var list = ListaReproduccion.getById(id)
+                println("Escoja:\n1. Cambiar nombre\n2. Cambiar reproduccion aleatoria")
+                val op = readln().toInt()
+                if (op == 1){
+                    println("Ingrese el nuevo nombre de la lista: ")
+                    val nombre = readln()
+                    list.cambiarNombre(nombre)
+                }else{
+                    list.reproduccionAleatoria(!list.isAleatoria())
+                }
             }
             8 -> {
                 println("\nIngrese el ID de la cancion:")
@@ -76,10 +87,23 @@ fun main(args: Array<String>) {
                 }
             }
             9 -> {
-                // agregar quitar cancion
+                println("\nIngrese el ID de la lista:")
+                val id = readln().toInt()
+                var list = ListaReproduccion.getById(id)
+                println("Escoja:\n1. Agregar cancion\n2. Quitar cancion")
+                val op = readln().toInt()
+                println("Ingrese el ID de la cancion: ")
+                val idCancion = readln().toInt()
+                if (op == 1){
+                    list.agregarCancion(idCancion)
+                }else{
+                    list.quitarCancionPorId(idCancion)
+                }
             }
             10 -> {
-                //borrar lista
+                println("\nIngrese el ID de la lista:")
+                val id = readln().toInt()
+                ListaReproduccion.deleteById(id)
             }
             11 ->{
                 println("\nIngrese el ID de la cancion:")
@@ -93,9 +117,5 @@ fun main(args: Array<String>) {
                 println("Error: Opcion no reconocida")
             }
         }
-
-
     }while (opt!=12)
-
-
 }
