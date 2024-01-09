@@ -13,15 +13,13 @@ class CIntentExplicitoParametros : AppCompatActivity() {
         val apellido = intent.getStringExtra("apellido")
         val edad = intent.getIntExtra("edad", 0)
         val boton = findViewById<Button>(R.id.btn_devolver_respuesta)
-        boton.setOnClickListener {
-            devolverRespuesta()
-        }
+        boton
+            .setOnClickListener { devolverRespuesta() }
     }
-
     fun devolverRespuesta(){
         val intentDevolverParametros = Intent()
-        intentDevolverParametros.putExtra("nombreModificado", "Gabriel")
-        intentDevolverParametros.putExtra("edadModificado", 21)
+        intentDevolverParametros.putExtra("nombreModificado", "Vicente")
+        intentDevolverParametros.putExtra("edadModificado", 33)
         setResult(
             RESULT_OK,
             intentDevolverParametros
