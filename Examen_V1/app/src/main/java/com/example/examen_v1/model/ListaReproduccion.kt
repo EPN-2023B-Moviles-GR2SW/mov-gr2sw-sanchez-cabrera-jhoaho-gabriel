@@ -27,7 +27,13 @@ class ListaReproduccion(
         reproduccionAleatoria ?: false,
         duracion ?: 0.0,
         listaCanciones ?: arrayListOf<Cancion>()
-    )
+    ){
+        ListaReproduccion.agregarLista(this)
+    }
+
+    fun getNombre():String {
+        return nombre
+    }
 
     fun getListaCanciones(): ArrayList<Cancion>? {
         return listaCanciones
@@ -71,6 +77,32 @@ class ListaReproduccion(
 
     companion object {
         var numListas: Int = 0
+        var listas: ArrayList<ListaReproduccion> = arrayListOf<ListaReproduccion>()
+
+        fun agregarLista(lista: ListaReproduccion){
+            listas.add(lista)
+        }
+
+        fun quitarLista(lista: ListaReproduccion){
+            listas.remove(lista)
+        }
+
+        fun deleteById(id: Int): Boolean {
+            val removido = listas.removeIf { lista -> (lista.id == id) }
+            return removido
+        }
+
+        fun getById(id: Int): ListaReproduccion?{
+            for (item in listas) {
+                if (item.id == id) {
+                    println("Lista encontrada")
+                    return item
+                }
+            }
+            println("No se ha encontrado la lista.")
+            return null
+        }
+
     }
 
 }
