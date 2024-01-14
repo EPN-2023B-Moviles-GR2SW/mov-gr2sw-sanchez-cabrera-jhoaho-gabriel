@@ -1,17 +1,27 @@
 package com.example.examen_v1
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.ContextMenu
+import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.example.examen_v1.model.ListaReproduccion
 import com.example.examen_v1.view.*
 
 class MainActivity : AppCompatActivity() {
 
     private val listas = ListaReproduccion.listas
+    var idItemSeleccionado = 0
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,19 +39,85 @@ class MainActivity : AppCompatActivity() {
             this,
             android.R.layout.simple_list_item_1,
             listas.mapIndexed { index, listaReproduccion ->
-                "${index}| ${listaReproduccion.getNombre()}"
+                "${index} | ${listaReproduccion.getNombre()}"
             }
         )
         listView.adapter = adaptador
         adaptador.notifyDataSetChanged()
-        //registerForContextMenu(listViewLibros)
+        registerForContextMenu(listView)
     }
 
-    fun irActividad(
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_listas, menu);
+        val infoLista = menuInfo as AdapterView.AdapterContextMenuInfo;
+        val idLista = infoLista.position
+        if(idLista != null){
+            idItemSeleccionado = ListaReproduccion.listas[idLista].getId()
+        }
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.mc_lv_ver -> {
+                try {
+                    val idLista = idItemSeleccionado;
+                    irActividad(ViewVerLista::class.java, idLista)
+                }catch (e:Throwable){
+                    Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                }
+                return true;
+            }
+            R.id.mc_lv_editar-> {
+                try {
+                    val idLista = idItemSeleccionado;
+                    irActividad(ViewEditarLista::class.java, idLista)
+                }catch (e:Throwable){
+                    Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                }
+                return true;
+            }
+            R.id.mc_lv_eliminar -> {
+                abrirDialogEliminar()
+                return true;
+            }
+
+            else -> super.onContextItemSelected(item)
+        }
+    }
+
+    private fun irActividad(
         clase: Class<*>
     ) {
         val intent = Intent(this, clase)
         startActivity(intent)
+    }
+
+    private fun irActividad(clase: Class<*>, id:Int?){
+        val intent = Intent(this, clase)
+        intent.putExtra("idLista",id)
+        startActivity(intent)
+    }
+
+    private fun abrirDialogEliminar(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Esta seguro que desea eliminar?")
+        builder.setPositiveButton(
+            "Si",
+            DialogInterface.OnClickListener{ dialog, which ->
+                if (idItemSeleccionado.let { ListaReproduccion.deleteById(it) }){
+                    updateViewLista()
+                }
+            }
+        )
+        builder.setNegativeButton("Cancelar", null)
+        val dialogo = builder.create()
+        dialogo.show()
     }
 
     override fun onRestart() {

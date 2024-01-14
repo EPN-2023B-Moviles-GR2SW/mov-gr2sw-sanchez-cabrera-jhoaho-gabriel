@@ -31,6 +31,9 @@ class ListaReproduccion(
         ListaReproduccion.agregarLista(this)
     }
 
+    fun getId():Int {
+        return id
+    }
     fun getNombre():String {
         return nombre
     }
