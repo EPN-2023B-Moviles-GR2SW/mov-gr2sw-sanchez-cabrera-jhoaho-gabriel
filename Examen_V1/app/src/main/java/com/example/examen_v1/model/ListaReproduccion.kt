@@ -46,16 +46,21 @@ class ListaReproduccion(
         return reproduccionAleatoria
     }
 
+    fun getDuracion():Double {
+        return duracion
+    }
+
     fun agregarCancion(idCancion: Int) {
         val cancion = Cancion.getById(idCancion)
         listaCanciones!!.add(cancion!!)
         updateDuracion(cancion.getDuracion())
     }
 
-    fun quitarCancionPorId(idCancion: Int) {
+    fun quitarCancionPorId(idCancion: Int): Boolean {
         val cancion = Cancion.getById(idCancion)
         listaCanciones!!.remove(cancion!!)
         updateDuracion(-cancion.getDuracion())
+        return true
     }
 
     fun cambiarNombre(nombre: String) {

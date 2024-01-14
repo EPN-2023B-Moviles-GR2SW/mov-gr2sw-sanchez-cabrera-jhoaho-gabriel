@@ -16,6 +16,16 @@ class Cancion(
         this.autor
     }
 
+    constructor(id: Int?, nombre: String, duracion: Double, favorita: Boolean, autor: String): this(
+        id?: numCanciones++,
+        nombre,
+        duracion,
+        favorita,
+        autor
+    ){
+        Cancion.agregarCancion(this)
+    }
+
 
     fun actualizarNombre(nombre: String) {
         this.nombre = nombre
@@ -23,6 +33,13 @@ class Cancion(
 
     fun actualizarFavorita(favorita: Boolean) {
         this.favorita = favorita
+    }
+
+    fun getId():Int{
+        return id
+    }
+    fun getNombre(): String {
+        return nombre
     }
 
     fun getDuracion(): Double {
@@ -38,18 +55,23 @@ class Cancion(
         var numCanciones: Int = 0
         var canciones: ArrayList<Cancion> = arrayListOf()
 
+        fun agregarCancion(cancion: Cancion){
+            Cancion.canciones.add(cancion)
+        }
+
+        fun quitarCancion(cancion: Cancion){
+            Cancion.canciones.remove(cancion)
+        }
+
         fun getById(id: Int): Cancion? {
             for (item in canciones) {
                 if (item.id == id) {
-                    println("Cancion encontrada")
                     return item
                 }
             }
-            println("No se ha encontrado la cancion.")
             return null
         }
 
     }
-
 
 }
