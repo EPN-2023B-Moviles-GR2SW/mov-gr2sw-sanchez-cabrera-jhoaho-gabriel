@@ -35,6 +35,14 @@ class Cancion(
         this.favorita = favorita
     }
 
+    fun actualizarDuracion(duracion: Double){
+        this.duracion = duracion
+    }
+
+    fun actualizarAutor(autor: String){
+        this.autor = autor
+    }
+
     fun getId():Int{
         return id
     }
@@ -44,6 +52,14 @@ class Cancion(
 
     fun getDuracion(): Double {
         return duracion
+    }
+
+    fun getAutor(): String {
+        return autor
+    }
+
+    fun isFavorita(): Boolean{
+        return favorita
     }
 
     override fun toString(): String {

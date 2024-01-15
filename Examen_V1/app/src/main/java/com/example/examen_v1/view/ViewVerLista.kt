@@ -26,12 +26,13 @@ class ViewVerLista : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_ver_lista)
 
+        idLista = intent.getIntExtra("idLista", -1)
+
         val botonAgregarCancion = findViewById<Button>(R.id.btn_vl_agregar_cancion)
         botonAgregarCancion.setOnClickListener {
-            irActividad(ViewCrearCancion::class.java)
+            irActividad(ViewCrearCancion::class.java, idLista)
         }
 
-        idLista = intent.getIntExtra("idLista", -1)
         updateViewLista()
         llenarCampos()
 
@@ -74,28 +75,18 @@ class ViewVerLista : AppCompatActivity() {
             R.id.mc_lv_c_editar -> {
                 try {
                     val idCancion = idItemSeleccionado;
-                    irActividad(ViewEditarLista::class.java, idCancion)
+                    irActividad(ViewEditarCancion::class.java, idCancion)
                 } catch (e: Throwable) {
                     Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
                 }
                 return true;
             }
-
             R.id.mc_lv_c_eliminar -> {
                 abrirDialogEliminar()
                 return true;
             }
-
             else -> super.onContextItemSelected(item)
         }
-    }
-
-
-    private fun irActividad(
-        clase: Class<*>
-    ) {
-        val intent = Intent(this, clase)
-        startActivity(intent)
     }
 
     private fun irActividad(clase: Class<*>, id: Int?) {
@@ -135,15 +126,16 @@ class ViewVerLista : AppCompatActivity() {
                 txtDuracion.text = lista.getDuracion().toString()
             }
         }
-
     }
     override fun onRestart() {
         super.onRestart()
         updateViewLista()
+        llenarCampos()
     }
 
     override fun onResume() {
         super.onResume()
         updateViewLista()
+        llenarCampos()
     }
 }

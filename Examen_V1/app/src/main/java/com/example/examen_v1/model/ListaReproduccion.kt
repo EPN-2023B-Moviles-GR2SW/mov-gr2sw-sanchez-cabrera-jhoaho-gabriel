@@ -76,7 +76,7 @@ class ListaReproduccion(
     }
 
     private fun updateDuracion(duracion: Double) {
-        this.duracion + duracion
+        this.duracion += duracion
     }
 
     override fun toString(): String {
