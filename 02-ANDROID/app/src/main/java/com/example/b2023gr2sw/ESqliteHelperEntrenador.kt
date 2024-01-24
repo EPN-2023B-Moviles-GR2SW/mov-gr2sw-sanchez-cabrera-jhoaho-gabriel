@@ -24,11 +24,9 @@ class ESqliteHelperEntrenador(
             """.trimIndent()
         db?.execSQL(scriptSQLCrearTablaEntrenador)
     }
-
     override fun onUpgrade(db: SQLiteDatabase?,
                            oldVersion: Int,
                            newVersion: Int) {}
-
     fun crearEntrenador(
         nombre: String,
         descripcion: String
@@ -47,8 +45,6 @@ class ESqliteHelperEntrenador(
         return if (resultadoGuardar.toInt() == -1) false else true
     }
 
-
-
     fun eliminarEntrenadorFormulario(id:Int):Boolean{
         val conexionEscritura = writableDatabase
         // where ID = ?
@@ -62,11 +58,6 @@ class ESqliteHelperEntrenador(
         conexionEscritura.close()
         return if(resultadoEliminacion.toInt() == -1) false else true
     }
-
-
-
-
-
 
     fun actualizarEntrenadorFormulario(
         nombre: String,
@@ -90,10 +81,6 @@ class ESqliteHelperEntrenador(
         return if(resultadoActualizacion.toInt() == -1) false else true
     }
 
-
-
-
-
     fun consultarEntrenadorPorID(id: Int): BEntrenador{
         val baseDatosLectura = readableDatabase
         val scriptConsultaLectura = """
@@ -104,10 +91,6 @@ class ESqliteHelperEntrenador(
             scriptConsultaLectura, // Consulta
             parametrosConsultaLectura, // Parametros
         )
-
-
-
-
 
         // logica busqueda
         val existeUsuario = resultadoConsultaLectura.moveToFirst()
@@ -130,12 +113,4 @@ class ESqliteHelperEntrenador(
         baseDatosLectura.close()
         return usuarioEncontrado
     }
-
-
-
-
-
-
-
-
 }

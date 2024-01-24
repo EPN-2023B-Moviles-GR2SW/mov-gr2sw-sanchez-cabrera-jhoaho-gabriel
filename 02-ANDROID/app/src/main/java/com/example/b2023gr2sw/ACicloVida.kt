@@ -56,16 +56,6 @@ class ACicloVida : AppCompatActivity() {
         super.onSaveInstanceState(outState)
     }
 
-
-
-
-
-
-
-
-
-
-
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         // RECUPERAR LAS VARIABLES
@@ -79,12 +69,5 @@ class ACicloVida : AppCompatActivity() {
             textoGlobal = textoRecuperado
         }
     }
-
-
-
-
-
-
-
 
 }
