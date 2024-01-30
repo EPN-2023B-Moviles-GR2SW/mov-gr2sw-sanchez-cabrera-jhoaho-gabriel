@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
 import com.example.examen_v1.R
+import com.example.examen_v1.dao.EDatabase
 import com.example.examen_v1.model.Cancion
 import com.example.examen_v1.model.ListaReproduccion
 import com.google.android.material.snackbar.Snackbar
@@ -24,9 +25,10 @@ class ViewCrearCancion : AppCompatActivity() {
             val duracionCancion = findViewById<EditText>(R.id.et_cc_duracion)!!.text.toString().toDouble()
             val autorCancion = findViewById<EditText>(R.id.et_cc_autor)!!.text.toString()
             val favCancion = findViewById<Switch>(R.id.sw_cc_fav).isChecked
-            val nuevaCancion = Cancion(null, nombreCancion, duracionCancion, favCancion, autorCancion)
-            if (nuevaCancion != null) {
-                ListaReproduccion.getById(idLista)!!.agregarCancion(nuevaCancion.getId())
+            val nuevaCancion = EDatabase.database!!.crearCancion(nombreCancion, duracionCancion, favCancion, autorCancion)
+            if (nuevaCancion) {
+                val idCancion = EDatabase.database!!.getLastSongId()
+                EDatabase.database!!.agregarCancionALista(idLista, idCancion)
                 mostrarSnackbar("La cancion se ha creado con exito")
             } else mostrarSnackbar("Hubo un error en la creacion")
         }

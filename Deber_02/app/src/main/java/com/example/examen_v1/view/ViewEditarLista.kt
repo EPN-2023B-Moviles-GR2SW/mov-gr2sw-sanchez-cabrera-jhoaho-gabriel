@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
 import com.example.examen_v1.R
+import com.example.examen_v1.dao.EDatabase
 import com.example.examen_v1.model.ListaReproduccion
 import com.google.android.material.snackbar.Snackbar
 
@@ -22,9 +23,12 @@ class ViewEditarLista : AppCompatActivity() {
         botonGuardarCambios.setOnClickListener {
             val nombreLista = findViewById<EditText>(R.id.et_el_nombre)!!.text.toString()
             val reproduccionLista = findViewById<Switch>(R.id.sw_el_ra).isChecked
-            ListaReproduccion.getById(idLista)!!.setNombre(nombreLista)
-            ListaReproduccion.getById(idLista)!!.setReproduccionAleatoria(reproduccionLista)
-            mostrarSnackbar("Se ha actualizado la lista de reproduccion")
+            val act = EDatabase.database!!.actualizarLista(idLista, nombreLista, reproduccionLista, null)
+            if (act){
+                mostrarSnackbar("Se ha actualizado la lista de reproduccion")
+            }else{
+                mostrarSnackbar("Ha ocurrido un error")
+            }
         }
 
         llenarCampos()
@@ -45,7 +49,7 @@ class ViewEditarLista : AppCompatActivity() {
         val SwReproduccion = findViewById<Switch>(R.id.sw_el_ra)
 
         if (idLista != -1) {
-            val lista = ListaReproduccion.getById(idLista)
+            val lista = EDatabase.database!!.consultarListaPorID(idLista)
             if (lista !== null) {
                 txtNombre.setText(lista.getNombre())
                 SwReproduccion.isChecked = lista.isAleatoria()

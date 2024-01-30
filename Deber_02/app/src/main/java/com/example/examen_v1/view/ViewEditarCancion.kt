@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
 import com.example.examen_v1.R
+import com.example.examen_v1.dao.EDatabase
 import com.example.examen_v1.model.Cancion
 import com.google.android.material.snackbar.Snackbar
 
@@ -24,11 +25,12 @@ class ViewEditarCancion : AppCompatActivity() {
             val duracionCancion = findViewById<EditText>(R.id.et_ec_duracion)!!.text.toString().toDouble()
             val autorCancion = findViewById<EditText>(R.id.et_ec_autor)!!.text.toString()
             val favoritaCancion = findViewById<Switch>(R.id.sw_ec_fav).isChecked
-            Cancion.getById(idCancion)!!.setNombre(nombreCancion)
-            Cancion.getById(idCancion)!!.setDuracion(duracionCancion)
-            Cancion.getById(idCancion)!!.setAutor(autorCancion)
-            Cancion.getById(idCancion)!!.setFavorita(favoritaCancion)
-            mostrarSnackbar("Cancion actualizada con exito")
+            val act = EDatabase.database!!.actualizarCancion(idCancion, nombreCancion, duracionCancion, favoritaCancion, autorCancion)
+            if (act) {
+                mostrarSnackbar("Cancion actualizada con exito")
+            }else{
+                mostrarSnackbar("Ha ocurrido un error")
+            }
         }
 
         llenarCampos()
@@ -51,7 +53,7 @@ class ViewEditarCancion : AppCompatActivity() {
         val favoritaCancion = findViewById<Switch>(R.id.sw_ec_fav)
 
         if (idCancion != -1) {
-            val cancion = Cancion.getById(idCancion)
+            val cancion = EDatabase.database!!.consultarCancionPorID(idCancion)
             if (cancion !== null) {
                 nombreCancion.setText(cancion.getNombre())
                 duracionCancion.setText(cancion.getDuracion().toString())

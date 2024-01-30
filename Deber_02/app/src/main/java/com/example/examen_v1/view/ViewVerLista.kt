@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.examen_v1.R
+import com.example.examen_v1.dao.EDatabase
 import com.example.examen_v1.model.Cancion
 import com.example.examen_v1.model.ListaReproduccion
 
@@ -22,6 +23,7 @@ class ViewVerLista : AppCompatActivity() {
 
     var idLista = -1
     var idItemSeleccionado = -1
+    var listaCanciones = arrayListOf<Cancion>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_ver_lista)
@@ -40,8 +42,7 @@ class ViewVerLista : AppCompatActivity() {
 
     private fun updateViewLista() {
         val listView = findViewById<ListView>(R.id.lv_vl_lc)
-        val listaCanciones: ArrayList<Cancion>? =
-            ListaReproduccion.getById(idLista)!!.getListaCanciones()
+        listaCanciones = EDatabase.database!!.getAllCancionesPorLista(idLista)
         val adaptador = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1,
@@ -66,7 +67,7 @@ class ViewVerLista : AppCompatActivity() {
         val idCancion = infoCancion.position
         if (idLista != null) {
             idItemSeleccionado =
-                ListaReproduccion.listas[idLista].getListaCanciones()!![idCancion].getId()
+                listaCanciones[idCancion].getId()
         }
     }
 
@@ -101,7 +102,7 @@ class ViewVerLista : AppCompatActivity() {
         builder.setPositiveButton(
             "Si",
             DialogInterface.OnClickListener { dialog, which ->
-                if (idItemSeleccionado.let { ListaReproduccion.getById(idLista)!!.quitarCancionPorId(it) }) {
+                if (idItemSeleccionado.let { EDatabase.database!!.quitarCancionDeLista(idLista, it) }) {
                     updateViewLista()
                 }
             }
@@ -118,7 +119,7 @@ class ViewVerLista : AppCompatActivity() {
         val txtDuracion = findViewById<TextView>(R.id.tv_vl_duracion)
 
         if(idLista != -1){
-            val lista = ListaReproduccion.getById(idLista)
+            val lista = EDatabase.database!!.consultarListaPorID(idLista)
             if(lista!==null){
                 txtId.text = lista.getId().toString()
                 txtNombre.text = lista.getNombre()

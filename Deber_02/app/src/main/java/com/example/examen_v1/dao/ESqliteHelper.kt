@@ -9,12 +9,12 @@ import com.example.examen_v1.model.ListaReproduccion
 
 class ESqliteHelper(
     contexto: Context?
-) : SQLiteOpenHelper (
+) : SQLiteOpenHelper(
     contexto,
     "deber_02",
     null,
     1
-){
+) {
     override fun onCreate(db: SQLiteDatabase?) {
         val scriptSQLCreateTableCancion = """
             CREATE TABLE CANCION(
@@ -50,7 +50,7 @@ class ESqliteHelper(
         TODO("Not yet implemented")
     }
 
-    fun crearCancion(nombre: String, duracion: Double, favorita: Boolean, autor: String): Boolean{
+    fun crearCancion(nombre: String, duracion: Double, favorita: Boolean, autor: String): Boolean {
         val baseDatosEscritura = writableDatabase
         val valoresAGuardar = ContentValues()
         valoresAGuardar.put("nombre", nombre)
@@ -66,7 +66,13 @@ class ESqliteHelper(
         return resultadoGuardar.toInt() != -1
     }
 
-    fun actualizarCancion(id:Int, nombre: String, duracion: Double, favorita: Boolean, autor: String): Boolean {
+    fun actualizarCancion(
+        id: Int,
+        nombre: String,
+        duracion: Double,
+        favorita: Boolean,
+        autor: String
+    ): Boolean {
         val baseDatosEscritura = writableDatabase
         val valoresAActualizar = ContentValues()
         valoresAActualizar.put("nombre", nombre)
@@ -84,7 +90,7 @@ class ESqliteHelper(
         return resultadoActualizar.toInt() != -1
     }
 
-    fun getAllCancion(): ArrayList<Cancion>{
+    fun getAllCancion(): ArrayList<Cancion> {
         val baseDatosLectura = readableDatabase
         val scriptConsultaLectura = """
             SELECT * FROM CANCION
@@ -95,14 +101,14 @@ class ESqliteHelper(
         )
         val existenCanciones = resultadoConsultaLectura.moveToFirst()
         val arreglo = arrayListOf<Cancion>()
-        if(existenCanciones){
-            do{
-                val id= resultadoConsultaLectura.getInt(0) // Indice 0
+        if (existenCanciones) {
+            do {
+                val id = resultadoConsultaLectura.getInt(0) // Indice 0
                 val nombre = resultadoConsultaLectura.getString(1)
                 val duracion = resultadoConsultaLectura.getDouble(2)
                 val favorita = resultadoConsultaLectura.getInt(3) > 0
                 val autor = resultadoConsultaLectura.getString(4)
-                if(id != null){
+                if (id != null) {
                     arreglo.add(Cancion(id, nombre, duracion, favorita, autor))
                 }
             } while (resultadoConsultaLectura.moveToNext())
@@ -112,7 +118,7 @@ class ESqliteHelper(
         return arreglo
     }
 
-    fun consultarCancionPorID(id: Int): Cancion{
+    fun consultarCancionPorID(id: Int): Cancion {
         val baseDatosLectura = readableDatabase
         val scriptConsultaLectura = """
             SELECT * FROM CANCION WHERE ID = ?
@@ -124,15 +130,15 @@ class ESqliteHelper(
         )
 
         val existeCancion = resultadoConsultaLectura.moveToFirst()
-        val cancionEncontrada = Cancion(0,"",0.0,false,"")
-        if(existeCancion){
-            do{
-                val id= resultadoConsultaLectura.getInt(0) // Indice 0
+        val cancionEncontrada = Cancion(0, "", 0.0, false, "")
+        if (existeCancion) {
+            do {
+                val id = resultadoConsultaLectura.getInt(0) // Indice 0
                 val nombre = resultadoConsultaLectura.getString(1)
                 val duracion = resultadoConsultaLectura.getDouble(2)
                 val favorita = resultadoConsultaLectura.getInt(3) > 0
                 val autor = resultadoConsultaLectura.getString(4)
-                if(id != null){
+                if (id != null) {
                     // llenar el arreglo con un nuevo BEntrenador
                     cancionEncontrada.setId(id)
                     cancionEncontrada.setNombre(nombre)
@@ -147,9 +153,9 @@ class ESqliteHelper(
         return cancionEncontrada
     }
 
-    fun eliminarCancionPorID(id:Int):Boolean{
+    fun eliminarCancionPorID(id: Int): Boolean {
         val conexionEscritura = writableDatabase
-        val parametrosConsultaDelete = arrayOf( id.toString() )
+        val parametrosConsultaDelete = arrayOf(id.toString())
         val resultadoEliminacion = conexionEscritura
             .delete(
                 "LISTAXCANCION", // Nombre tabla
@@ -165,7 +171,7 @@ class ESqliteHelper(
         return !(resultadoEliminacion.toInt() == -1 && resultadoEliminacion2.toInt() == -1)
     }
 
-    fun crearLista(nombre: String, reproduccionAleatoria: Boolean?, duracion: Double?): Boolean{
+    fun crearLista(nombre: String, reproduccionAleatoria: Boolean?, duracion: Double?): Boolean {
         val baseDatosEscritura = writableDatabase
         val valoresAGuardar = ContentValues()
         valoresAGuardar.put("nombre", nombre)
@@ -180,12 +186,19 @@ class ESqliteHelper(
         return resultadoGuardar.toInt() != -1
     }
 
-    fun actualizarLista(id: Int, nombre: String, reproduccionAleatoria: Boolean?, duracion: Double?): Boolean {
+    fun actualizarLista(
+        id: Int,
+        nombre: String,
+        reproduccionAleatoria: Boolean?,
+        duracion: Double?
+    ): Boolean {
         val baseDatosEscritura = writableDatabase
         val valoresAActualizar = ContentValues()
         valoresAActualizar.put("nombre", nombre)
         valoresAActualizar.put("reproduccionAleatoria", reproduccionAleatoria)
-        valoresAActualizar.put("duracion", duracion)
+        if (duracion != null) {
+            valoresAActualizar.put("duracion", duracion)
+        }
         val parametroConsultaActualizar = arrayOf(id.toString())
         val resultadoActualizar = baseDatosEscritura.update(
             "LISTA",
@@ -197,7 +210,7 @@ class ESqliteHelper(
         return resultadoActualizar.toInt() != -1
     }
 
-    fun getAllListas(): ArrayList<ListaReproduccion>{
+    fun getAllListas(): ArrayList<ListaReproduccion> {
         val baseDatosLectura = readableDatabase
         val scriptConsultaLectura = """
             SELECT * FROM LISTA
@@ -208,13 +221,13 @@ class ESqliteHelper(
         )
         val existenListas = resultadoConsultaLectura.moveToFirst()
         val arreglo = arrayListOf<ListaReproduccion>()
-        if(existenListas){
-            do{
-                val id= resultadoConsultaLectura.getInt(0) // Indice 0
+        if (existenListas) {
+            do {
+                val id = resultadoConsultaLectura.getInt(0) // Indice 0
                 val nombre = resultadoConsultaLectura.getString(1)
                 val reproduccionAleatoria = resultadoConsultaLectura.getInt(2) > 0
                 val duracion = resultadoConsultaLectura.getDouble(3)
-                if(id != null){
+                if (id != null) {
                     val lss = ListaReproduccion(id, nombre, reproduccionAleatoria, duracion, null)
                     val sl = this.getAllCancionesPorLista(id)
                     lss.setListaDeCanciones(sl)
@@ -227,7 +240,7 @@ class ESqliteHelper(
         return arreglo
     }
 
-    private fun getAllCancionesPorLista(idLista: Int): ArrayList<Cancion> {
+    fun getAllCancionesPorLista(idLista: Int): ArrayList<Cancion> {
         val baseDatosLectura = readableDatabase
         val scriptConsultaLectura = """
             SELECT c.id, c.nombre, c.duracion, c.favorita, c.autor from (
@@ -242,14 +255,14 @@ class ESqliteHelper(
 
         val existenCanciones = resultadoConsultaLectura.moveToFirst()
         val arreglo = arrayListOf<Cancion>()
-        if(existenCanciones){
-            do{
-                val id= resultadoConsultaLectura.getInt(0) // Indice 0
+        if (existenCanciones) {
+            do {
+                val id = resultadoConsultaLectura.getInt(0) // Indice 0
                 val nombre = resultadoConsultaLectura.getString(1)
                 val duracion = resultadoConsultaLectura.getDouble(2)
                 val favorita = resultadoConsultaLectura.getInt(3) > 0
                 val autor = resultadoConsultaLectura.getString(4)
-                if(id != null){
+                if (id != null) {
                     arreglo.add(Cancion(id, nombre, duracion, favorita, autor))
                 }
             } while (resultadoConsultaLectura.moveToNext())
@@ -259,7 +272,7 @@ class ESqliteHelper(
         return arreglo
     }
 
-    fun consultarListaPorID(id: Int): ListaReproduccion{
+    fun consultarListaPorID(id: Int): ListaReproduccion {
         val baseDatosLectura = readableDatabase
         val scriptConsultaLectura = """
             SELECT * FROM LISTA WHERE ID = ?
@@ -272,13 +285,13 @@ class ESqliteHelper(
 
         val existeLista = resultadoConsultaLectura.moveToFirst()
         val listaEncontrada = ListaReproduccion(0, "", false, 0.0, null)
-        if(existeLista){
-            do{
-                val id= resultadoConsultaLectura.getInt(0) // Indice 0
+        if (existeLista) {
+            do {
+                val id = resultadoConsultaLectura.getInt(0) // Indice 0
                 val nombre = resultadoConsultaLectura.getString(1)
                 val reproduccionAleatoria = resultadoConsultaLectura.getInt(2) > 0
                 val duracion = resultadoConsultaLectura.getDouble(3)
-                if(id != null){
+                if (id != null) {
                     // llenar el arreglo con un nuevo BEntrenador
                     listaEncontrada.setId(id)
                     listaEncontrada.setNombre(nombre)
@@ -292,9 +305,9 @@ class ESqliteHelper(
         return listaEncontrada
     }
 
-    fun eliminarListaPorID(id:Int):Boolean{
+    fun eliminarListaPorID(id: Int): Boolean {
         val conexionEscritura = writableDatabase
-        val parametrosConsultaDelete = arrayOf( id.toString() )
+        val parametrosConsultaDelete = arrayOf(id.toString())
         val resultadoEliminacion = conexionEscritura
             .delete(
                 "LISTAXCANCION", // Nombre tabla
@@ -310,7 +323,7 @@ class ESqliteHelper(
         return !(resultadoEliminacion.toInt() == -1 && resultadoEliminacion2.toInt() == -1)
     }
 
-    fun agregarCancionALista(idLista: Int, idCancion: Int): Boolean{
+    fun agregarCancionALista(idLista: Int, idCancion: Int): Boolean {
         val baseDatosEscritura = writableDatabase
         val valoresAGuardar = ContentValues()
         valoresAGuardar.put("idLista", idLista)
@@ -324,9 +337,9 @@ class ESqliteHelper(
         return resultadoGuardar.toInt() != -1
     }
 
-    fun quitarCancionDeLista(idLista: Int, idCancion: Int): Boolean{
+    fun quitarCancionDeLista(idLista: Int, idCancion: Int): Boolean {
         val baseDatosEscritura = writableDatabase
-        val parametrosConsultaDelete = arrayOf( idLista.toString(), idCancion.toString() )
+        val parametrosConsultaDelete = arrayOf(idLista.toString(), idCancion.toString())
         val resultadoGuardar = baseDatosEscritura.delete(
             "LISTAXCANCION",
             "idLista=? AND idCancion=?",
@@ -336,4 +349,29 @@ class ESqliteHelper(
         return resultadoGuardar.toInt() != -1
     }
 
+    fun getLastSongId(): Int {
+        val baseDatosLectura = readableDatabase
+        val scriptConsultaLectura = """
+            SELECT * FROM CANCION ORDER BY ID DESC LIMIT 1
+        """.trimIndent()
+        val resultadoConsultaLectura = baseDatosLectura.rawQuery(
+            scriptConsultaLectura, // Consulta
+            null
+        )
+
+        val existeCancion = resultadoConsultaLectura.moveToFirst()
+        var idCancion = -1
+        if (existeCancion) {
+            do {
+                val id = resultadoConsultaLectura.getInt(0) // Indice 0
+                if (id != null) {
+                    // llenar el arreglo con un nuevo BEntrenador
+                    idCancion = id
+                }
+            } while (resultadoConsultaLectura.moveToNext())
+        }
+        resultadoConsultaLectura.close()
+        baseDatosLectura.close()
+        return idCancion
+    }
 }
