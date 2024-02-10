@@ -4,19 +4,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.deber_03.adapter.PreviewChatAdapter
+import com.example.deber_03.adapter.PreviewProfileAdapter
 
-class RecyclerViewMessages : AppCompatActivity() {
+class RecyclerViewSearch : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar!!.hide()
-        setContentView(R.layout.activity_recycler_view_messages)
+        setContentView(R.layout.activity_recycler_view_search)
         initRecylcerView()
     }
 
     private fun initRecylcerView(){
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerMessagesIG)
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerProfilesIG)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = PreviewChatAdapter(PreviewChatProvider.chatList)
+        recyclerView.adapter = PreviewProfileAdapter(PreviewProfileProvider.profileList)
     }
 }

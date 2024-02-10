@@ -2,13 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cl_item_view"
+    android:id="@+id/cl_item_search"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/siv_chat"
+        android:id="@+id/siv_search"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="10dp"
@@ -20,44 +19,36 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tv_name_chat"
+        android:id="@+id/tv_name_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/siv_chat"
+        app:layout_constraintStart_toEndOf="@+id/siv_search"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Jhoaho Sanchez" />
+        android:text="Jhoaho Sanchez" />
 
     <TextView
-        android:id="@+id/tv_msg"
+        android:id="@+id/tv_desc_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:textColor="#FFFFFF"
-        app:layout_constraintStart_toEndOf="@+id/siv_chat"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name_chat"
-        tools:text="Interesante, cuentame algo mas" />
+        app:layout_constraintStart_toEndOf="@+id/siv_search"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name_profile"
+        tools:text="Let's dance!" />
 
     <TextView
-        android:id="@+id/tv_point"
+        android:id="@+id/tv_cross"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        app:layout_constraintStart_toEndOf="@+id/tv_msg"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name_chat"
-        tools:text=" · " />
-
-    <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        app:layout_constraintStart_toEndOf="@+id/tv_point"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name_chat"
-        tools:text="2 d" />
-
+        android:layout_marginEnd="16dp"
+        android:textColor="#7A7979"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="x" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
