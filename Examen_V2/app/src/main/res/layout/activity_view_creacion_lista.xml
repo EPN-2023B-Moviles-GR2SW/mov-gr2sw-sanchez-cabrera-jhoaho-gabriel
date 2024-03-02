@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/id_l_creacion_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.ViewCreacionLista">
+
+    <EditText
+        android:id="@+id/input_name_ls"
+        android:layout_width="323dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:hint="Nombre"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.447"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.174" />
+
+    <Switch
+        android:id="@+id/input_active_ls"
+        android:layout_width="320dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="36dp"
+        android:text="Reproduccion aleatoria"
+        app:layout_constraintEnd_toEndOf="@+id/input_name_ls"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/input_name_ls"
+        app:layout_constraintTop_toBottomOf="@+id/input_name_ls" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="Creacion de Lista de reproduccion"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_create_ls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="Crear"
+        app:layout_constraintEnd_toEndOf="@+id/input_active_ls"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@+id/input_active_ls"
+        app:layout_constraintTop_toBottomOf="@+id/input_active_ls" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
