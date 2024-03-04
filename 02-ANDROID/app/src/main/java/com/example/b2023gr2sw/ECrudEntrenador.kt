@@ -25,16 +25,19 @@ class ECrudEntrenador : AppCompatActivity() {
                     id.text.toString().toInt()
                 )
             // Setear el texto en componentes visuales
-            if (entrenador.id == 0){
+            if(entrenador.id == 0){
                 mostrarSnackbar("Usu. no encontrado")
             }
             id.setText(entrenador.id.toString())
             nombre.setText(entrenador.nombre)
             descripcion.setText(entrenador.descripcion)
+            mostrarSnackbar("Usu. encontrado")
+
         }
+
         val botonCrearBDD = findViewById<Button>(R.id.btn_crear_bdd)
         botonCrearBDD
-            .setOnClickListener{
+            .setOnClickListener {
                 val nombre = findViewById<EditText>(R.id.input_nombre)
                 val descripcion = findViewById<EditText>(R.id.input_descripcion)
                 val respuesta = EBaseDeDatos
@@ -57,17 +60,19 @@ class ECrudEntrenador : AppCompatActivity() {
                 )
                 if (respuesta) mostrarSnackbar("Usu. Actualizado")
             }
-        val botonEliminarBDD = findViewById<Button>(R.id.btn_eliminar_bdd)
+        val botonEliminarBDD = findViewById<Button>(
+            R.id.btn_eliminar_bdd
+        )
         botonEliminarBDD.setOnClickListener {
             val id = findViewById<EditText>(R.id.input_id)
-            val respuesta = EBaseDeDatos.tablaEntrenador!!.eliminarEntrenadorFormulario(
+            val respuesta = EBaseDeDatos.tablaEntrenador!!
+                .eliminarEntrenadorFormulario(
                 id.text.toString().toInt()
             )
             if (respuesta) mostrarSnackbar("Usu. Eliminado")
         }
     }
-
-    fun mostrarSnackbar(texto:String){
+    fun mostrarSnackbar(texto: String) {
         Snackbar
             .make(
                 findViewById(R.id.cl_sqlite), // view
@@ -76,5 +81,4 @@ class ECrudEntrenador : AppCompatActivity() {
             )
             .show()
     }
-
 }

@@ -8,16 +8,16 @@ import android.provider.ContactsContract
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.common.api.GoogleApiActivity
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     val callbackContenidoIntentExplicito =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                if (result.data != null) {
+        ){
+                result ->
+            if(result.resultCode == Activity.RESULT_OK){
+                if(result.data != null){
                     // Logica Negocio
                     val data = result.data
                     mostrarSnackbar(
@@ -26,8 +26,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-    fun mostrarSnackbar(texto: String) {
+    fun mostrarSnackbar(texto:String){
         Snackbar
             .make(
                 findViewById(R.id.id_layout_main), // view
@@ -40,14 +39,14 @@ class MainActivity : AppCompatActivity() {
     val callbackIntentPickUri =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode === RESULT_OK) {
-                if (result.data != null) {
-                    if (result.data!!.data != null) {
+        ){
+                result ->
+            if(result.resultCode === RESULT_OK){
+                if(result.data != null){
+                    if(result.data!!.data != null){
                         val uri: Uri = result.data!!.data!!
                         val cursor = contentResolver.query(
-                            uri, null, null, null, null, null
-                        )
+                            uri, null, null, null,  null, null)
                         cursor?.moveToFirst()
                         val indiceTelefono = cursor?.getColumnIndex(
                             ContactsContract.CommonDataKinds.Phone.NUMBER
@@ -59,7 +58,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -81,8 +79,7 @@ class MainActivity : AppCompatActivity() {
                 irActividad(BListView::class.java)
             }
         val botonIntentImplicito = findViewById<Button>(
-            R.id.btn_ir_intent_implicito
-        )
+            R.id.btn_ir_intent_implicito)
         botonIntentImplicito
             .setOnClickListener {
                 val intentConRespuesta = Intent(
@@ -92,13 +89,11 @@ class MainActivity : AppCompatActivity() {
                 callbackIntentPickUri.launch(intentConRespuesta)
             }
         val botonIntentExplicito = findViewById<Button>(
-            R.id.btn_ir_intent_explicito
-        )
+            R.id.btn_ir_intent_explicito)
         botonIntentExplicito
             .setOnClickListener {
                 abrirActividadConParametros(
-                    CIntentExplicitoParametros::class.java
-                )
+                    CIntentExplicitoParametros::class.java)
             }
 
         val botonSqlite = findViewById<Button>(R.id.btn_sqlite)
@@ -107,43 +102,51 @@ class MainActivity : AppCompatActivity() {
                 irActividad(ECrudEntrenador::class.java)
             }
 
-        val botonRView = findViewById<Button>(R.id.btn_recycler_view)
-        botonRView.setOnClickListener {
-            irActividad(FRecycleView::class.java)
-        }
+        val botonRView = findViewById<Button>(R.id.btn_revcycler_view)
+        botonRView
+            .setOnClickListener {
+                irActividad(FRecyclerView::class.java)
+            }
 
         val botonGoogleMaps = findViewById<Button>(R.id.btn_google_maps)
-        botonGoogleMaps.setOnClickListener {
-            irActividad(GGoogleMapsActivity::class.java)
-        }
+        botonGoogleMaps
+            .setOnClickListener {
+                irActividad(GGoogleMapsActivity::class.java)
+            }
 
         val botonFirebaseUI = findViewById<Button>(R.id.btn_intent_firebase_ui)
-        botonFirebaseUI.setOnClickListener {
-            irActividad(HFirebaseUIAuth::class.java)
-        }
+        botonFirebaseUI
+            .setOnClickListener {
+                irActividad(HFirebaseUIAuth::class.java)
+            }
+
 
         val botonFirestore = findViewById<Button>(R.id.btn_intent_firestore)
-        botonFirestore.setOnClickListener {
-            irActividad(IFirestore::class.java)
-        }
+        botonFirestore
+            .setOnClickListener {
+                irActividad(IFirestore::class.java)
+            }
+
 
     } // Termina on Create
-
     fun abrirActividadConParametros(
         clase: Class<*>
-    ) {
+    ){
         val intentExplicito = Intent(this, clase)
         // Enviar parametros (solamente variables primitivas)
         intentExplicito.putExtra("nombre", "Adrian")
         intentExplicito.putExtra("apellido", "Eguez")
         intentExplicito.putExtra("edad", 34)
 
+        intentExplicito.putExtra("entrenador",
+            BEntrenador(1,"Nombre","Descripcion")
+            )
+
         callbackContenidoIntentExplicito.launch(intentExplicito)
     }
-
     fun irActividad(
         clase: Class<*>
-    ) {
+    ){
         val intent = Intent(this, clase)
         startActivity(intent)
     }

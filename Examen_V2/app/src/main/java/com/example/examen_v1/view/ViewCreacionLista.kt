@@ -20,8 +20,8 @@ class ViewCreacionLista : AppCompatActivity() {
             val nombreLista = findViewById<EditText>(R.id.input_name_ls)!!.text.toString()
             val reproduccionAleatoria = findViewById<Switch>(R.id.input_active_ls)!!.isChecked
             val nuevaLista = EDatabase.database!!.crearLista(nombreLista, reproduccionAleatoria, 0.0)
-            if (nuevaLista) mostrarSnackbar("Lista creada exitosamente") else mostrarSnackbar(
-                "Ha ocurrido un error"
+            if (nuevaLista.equals("true")) mostrarSnackbar("Lista creada exitosamente") else mostrarSnackbar(
+                nuevaLista
             )
         }
     }

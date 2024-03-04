@@ -17,6 +17,7 @@ import com.example.examen_v1.dao.EDatabase
 import com.example.examen_v1.dao.FirebaseHelper
 import com.example.examen_v1.model.ListaReproduccion
 import com.example.examen_v1.view.*
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,12 +29,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         EDatabase.database = FirebaseHelper()
-        listas = EDatabase.database!!.getAllListas()
+        try {
+            listas = EDatabase.database!!.getAllListas()
+        }catch (ex: Exception){
+            mostrarSnackbar(ex.toString())
+        }
+
         val botonCrearLista = findViewById<Button>(R.id.btn_crear_lista)
         botonCrearLista.setOnClickListener {
             irActividad(ViewCreacionLista::class.java)
         }
-        updateViewLista()
+        //updateViewLista()
     }
 
     private fun updateViewLista() {
@@ -132,5 +138,15 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateViewLista()
+    }
+
+    private fun mostrarSnackbar(texto: String) {
+        Snackbar
+            .make(
+                findViewById(R.id.id_l_creacion_view), // view
+                texto, // texto
+                Snackbar.LENGTH_LONG // tiempo
+            )
+            .show()
     }
 }

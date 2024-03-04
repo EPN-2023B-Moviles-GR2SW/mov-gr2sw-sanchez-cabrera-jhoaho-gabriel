@@ -1,6 +1,5 @@
 package com.example.examen_v1.model
 
-import com.example.examen_v1.dao.EDatabase
 
 class ListaReproduccion(
     private var id: Int,

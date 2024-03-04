@@ -44,7 +44,7 @@
             android:exported="false"
             android:label="@string/title_activity_google_maps_inicio" />
         <activity
-            android:name=".FRecycleView"
+            android:name=".FRecyclerView"
             android:exported="false" />
         <activity
             android:name=".ECrudEntrenador"

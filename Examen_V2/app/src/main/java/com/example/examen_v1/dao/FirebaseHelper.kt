@@ -8,9 +8,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlin.collections.ArrayList
 import java.util.Date
 
-class FirebaseHelper() {
+class FirebaseHelper {
     var queryLista: Query? = null
     var queryCancion: Query? = null
     var arregloListas: ArrayList<ListaReproduccion> = arrayListOf()
@@ -125,8 +126,8 @@ class FirebaseHelper() {
         nombre: String,
         reproduccionAleatoria: Boolean?,
         duracion: Double
-    ): Boolean { //Done!
-        var rs = false
+    ): String { //Done!
+        var rs = ""
         val db = Firebase.firestore
         val listaRef = db.collection("ListaDeReproduccion")
         val datosLista = hashMapOf(
@@ -138,10 +139,11 @@ class FirebaseHelper() {
         val identificador = Date().time
         listaRef.document(identificador.toString()).set(datosLista)
             .addOnSuccessListener {
-                rs = true
+                rs = "true"
             }
             .addOnFailureListener {
-                rs = false
+                rs = it.toString()
+
             }
         return rs
     }
@@ -176,7 +178,7 @@ class FirebaseHelper() {
     fun getAllListas(): ArrayList<ListaReproduccion> { //Done!
 
         val db = Firebase.firestore
-        val listasRef = db.collection("ListasDeReproduccion")
+        val listasRef = db.collection("ListaDeReproduccion")
         var tarea: Task<QuerySnapshot>? = null
         tarea = listasRef.get() // 1era vez
         arregloListas.clear()
@@ -188,7 +190,8 @@ class FirebaseHelper() {
                         anadirLista(lista)
                     }
                 }
-                .addOnFailureListener { }
+                .addOnFailureListener {
+                }
         }
 
         return arregloListas
@@ -212,9 +215,9 @@ class FirebaseHelper() {
     ) { //other methods
         val listaReproduccion = ListaReproduccion(
             document.id.toInt(),
-            document.data.get("nombre") as String,
-            document.data.get("reproduccionAleatoria") as Boolean,
-            document.data.get("duracion") as Double,
+            document.data["nombre"] as String,
+            document.data["reproduccionAleatoria"] as Boolean,
+            document.data["duracion"] as Double,
             null
         )
         arregloListas.add(listaReproduccion)
