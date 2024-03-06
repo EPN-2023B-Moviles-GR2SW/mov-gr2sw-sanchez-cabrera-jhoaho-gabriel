@@ -1,6 +1,6 @@
 package com.example.proyecto_02.entities
 
-class Cuenta(
+data class Cuenta(
     var id: String,
     var idUsuario: String,
     var php: String,

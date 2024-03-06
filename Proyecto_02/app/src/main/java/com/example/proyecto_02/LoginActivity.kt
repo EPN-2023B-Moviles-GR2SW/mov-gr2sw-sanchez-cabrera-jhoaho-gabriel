@@ -1,11 +1,11 @@
-package com.example.proyecto_02.views
+package com.example.proyecto_02
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import com.example.proyecto_02.R
+import com.example.proyecto_02.views.HomeView
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.IdpResponse
@@ -34,6 +34,8 @@ class LoginActivity : AppCompatActivity() {
             // Unchecked!!
         }
 
+        //saltarLogin()
+
         /*
         val btnLogout = findViewById<Button>(R.id.btn_logout_firebase)
         btnLogout.setOnClickListener { seDeslogeo() }
@@ -49,6 +51,16 @@ class LoginActivity : AppCompatActivity() {
         }*/
     }
 
+    override fun onResume() {
+        super.onResume()
+        //saltarLogin()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        //saltarLogin()
+    }
+
     //Callback del INTENT de LOGIN
     private val respuestaLoginAuthUi = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
@@ -60,21 +72,28 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
     fun seLogeo(
         res: IdpResponse
-    ){
-        val tvBienvenido = findViewById<TextView>(R.id.tvBienvenido)
-        tvBienvenido.text = FirebaseAuth.getInstance().currentUser?.displayName
-        if(res.isNewUser == true){
+    ) {
+        if (res.isNewUser == true) {
             registrarUsuarioPorPrimeraVez(res)
         }
+        irActividad(HomeView::class.java)
     }
-    fun registrarUsuarioPorPrimeraVez(usuario: IdpResponse){
+
+    fun registrarUsuarioPorPrimeraVez(usuario: IdpResponse) {
         /*
          usuario.email;
          usuario.phoneNumber;
          usuario.user.name;
          */
+    }
+
+    fun saltarLogin() {
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            irActividad(HomeView::class.java)
+        }
     }
 
     /*
@@ -87,4 +106,11 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.visibility = View.VISIBLE
         FirebaseAuth.getInstance().signOut()
     }*/
+
+    fun irActividad(
+        clase: Class<*>
+    ) {
+        val intent = Intent(this, clase)
+        startActivity(intent)
+    }
 }

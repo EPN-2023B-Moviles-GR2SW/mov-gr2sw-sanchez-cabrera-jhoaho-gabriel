@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_item_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f1f7fd">
+
+
+    <TextView
+        android:id="@+id/tv_day_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/capriola"
+        android:textColor="#2f62c6"
+        android:textSize="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="12" />
+
+    <TextView
+        android:id="@+id/tv_day_week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/capriola"
+        android:textColor="#2f62c6"
+        app:layout_constraintEnd_toEndOf="@+id/tv_day_number"
+        app:layout_constraintStart_toStartOf="@+id/tv_day_number"
+        app:layout_constraintTop_toBottomOf="@+id/tv_day_number"
+        tools:text="Thu." />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/capriola"
+        android:textColor="#2f62c6"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_day_number"
+        app:layout_constraintStart_toEndOf="@+id/tv_day_number"
+        app:layout_constraintTop_toTopOf="@+id/tv_day_number"
+        app:layout_constraintVertical_bias="0.4"
+        tools:text="22:04" />
+
+    <TextView
+        android:id="@+id/tv_entry_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#2f62c6"
+        app:layout_constraintStart_toStartOf="@+id/tv_time"
+        app:layout_constraintTop_toBottomOf="@+id/tv_time"
+        tools:text="Meditaciones del dia" />
+
+    <ImageView
+        android:id="@+id/iv_weather"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_mood"
+        app:layout_constraintEnd_toStartOf="@+id/iv_mood"
+        app:layout_constraintTop_toTopOf="@+id/iv_mood"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/sun_day_weather_symbol"
+        app:tint="#2f62c6" />
+
+    <ImageView
+        android:id="@+id/iv_mood"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_save"
+        app:layout_constraintEnd_toStartOf="@+id/iv_save"
+        app:layout_constraintTop_toTopOf="@+id/iv_save"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/emoji_happy"
+        app:tint="#2f62c6" />
+
+    <ImageView
+        android:id="@+id/iv_save"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/save_icon"
+        app:tint="#2f62c6" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
